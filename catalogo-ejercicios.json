@@ -1,0 +1,2667 @@
+{
+  "version": "1.1",
+  "actualizado": "2026-10-18",
+  "unidad_peso": "kg",
+  "grupos": [
+    {
+      "id": "PE",
+      "nombre": "Pecho"
+    },
+    {
+      "id": "ES",
+      "nombre": "Espalda"
+    },
+    {
+      "id": "HO",
+      "nombre": "Hombro"
+    },
+    {
+      "id": "BI",
+      "nombre": "Bíceps"
+    },
+    {
+      "id": "TR",
+      "nombre": "Tríceps"
+    },
+    {
+      "id": "AN",
+      "nombre": "Antebrazo"
+    },
+    {
+      "id": "CU",
+      "nombre": "Cuádriceps"
+    },
+    {
+      "id": "FE",
+      "nombre": "Femoral"
+    },
+    {
+      "id": "GL",
+      "nombre": "Glúteo y cadera"
+    },
+    {
+      "id": "PA",
+      "nombre": "Pantorrilla"
+    },
+    {
+      "id": "AB",
+      "nombre": "Abdomen y core"
+    },
+    {
+      "id": "FU",
+      "nombre": "Funcional"
+    },
+    {
+      "id": "CA",
+      "nombre": "Cardio"
+    }
+  ],
+  "musculos": [
+    {
+      "id": "pectoral",
+      "nombre": "Pectoral"
+    },
+    {
+      "id": "pectoral_superior",
+      "nombre": "Pectoral superior"
+    },
+    {
+      "id": "dorsal",
+      "nombre": "Dorsal ancho"
+    },
+    {
+      "id": "trapecio",
+      "nombre": "Trapecio"
+    },
+    {
+      "id": "romboides",
+      "nombre": "Romboides"
+    },
+    {
+      "id": "erectores",
+      "nombre": "Erectores espinales (espalda baja)"
+    },
+    {
+      "id": "deltoides_anterior",
+      "nombre": "Deltoides anterior"
+    },
+    {
+      "id": "deltoides_lateral",
+      "nombre": "Deltoides lateral"
+    },
+    {
+      "id": "deltoides_posterior",
+      "nombre": "Deltoides posterior"
+    },
+    {
+      "id": "manguito_rotador",
+      "nombre": "Manguito rotador"
+    },
+    {
+      "id": "biceps",
+      "nombre": "Bíceps"
+    },
+    {
+      "id": "braquial",
+      "nombre": "Braquial"
+    },
+    {
+      "id": "triceps",
+      "nombre": "Tríceps"
+    },
+    {
+      "id": "antebrazo",
+      "nombre": "Antebrazo"
+    },
+    {
+      "id": "cuadriceps",
+      "nombre": "Cuádriceps"
+    },
+    {
+      "id": "isquiotibiales",
+      "nombre": "Isquiotibiales"
+    },
+    {
+      "id": "gluteos",
+      "nombre": "Glúteos"
+    },
+    {
+      "id": "aductores",
+      "nombre": "Aductores"
+    },
+    {
+      "id": "abductores",
+      "nombre": "Abductores (glúteo medio)"
+    },
+    {
+      "id": "gemelos",
+      "nombre": "Gemelos"
+    },
+    {
+      "id": "soleo",
+      "nombre": "Sóleo"
+    },
+    {
+      "id": "abdomen",
+      "nombre": "Recto abdominal"
+    },
+    {
+      "id": "oblicuos",
+      "nombre": "Oblicuos"
+    },
+    {
+      "id": "core",
+      "nombre": "Core"
+    },
+    {
+      "id": "cardiovascular",
+      "nombre": "Sistema cardiovascular"
+    }
+  ],
+  "valores": {
+    "equipo": [
+      "barra",
+      "mancuerna",
+      "maquina",
+      "polea",
+      "smith",
+      "kettlebell",
+      "banco",
+      "peso_corporal",
+      "cardio",
+      "otro"
+    ],
+    "mecanica": [
+      "compuesto",
+      "aislamiento"
+    ],
+    "registro": {
+      "peso_reps": "series × reps × peso",
+      "peso_corporal": "series × reps (con lastre o asistencia opcional)",
+      "tiempo": "series × segundos",
+      "cardio": "duración, distancia y nivel"
+    },
+    "carga": {
+      "total": "peso total de barra o máquina",
+      "por_mano": "peso de cada mancuerna o kettlebell",
+      "placas": "número de placa o kg del stack",
+      "ninguna": "sin carga externa"
+    }
+  },
+  "ejercicios": [
+    {
+      "id": "PE01",
+      "nombre": "Press de banca plano con barra",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PE02",
+      "nombre": "Press inclinado con barra",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral_superior"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PE03",
+      "nombre": "Press declinado con barra",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PE04",
+      "nombre": "Press plano con mancuernas",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "PE05",
+      "nombre": "Press inclinado con mancuernas",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral_superior"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "PE06",
+      "nombre": "Press de pecho en máquina",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "PE07",
+      "nombre": "Press en máquina Smith",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior"
+      ],
+      "equipo": "smith",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PE08",
+      "nombre": "Aperturas planas con mancuernas",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "PE09",
+      "nombre": "Aperturas inclinadas con mancuernas",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral_superior"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "PE10",
+      "nombre": "Pec deck / mariposa",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": [
+        "peck deck",
+        "contractora"
+      ]
+    },
+    {
+      "id": "PE11",
+      "nombre": "Cruce de poleas desde arriba",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "PE12",
+      "nombre": "Cruce de poleas desde abajo",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral_superior"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "PE13",
+      "nombre": "Fondos en paralelas (énfasis pecho)",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "PE14",
+      "nombre": "Flexiones de pecho",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_anterior",
+        "core"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "PE15",
+      "nombre": "Pullover con mancuerna",
+      "grupo": "PE",
+      "musculos_primarios": [
+        "pectoral"
+      ],
+      "musculos_secundarios": [
+        "dorsal",
+        "triceps"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES01",
+      "nombre": "Dominadas agarre prono",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "biceps",
+        "romboides"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "ES02",
+      "nombre": "Dominadas supinas (chin-up)",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "biceps"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "ES03",
+      "nombre": "Dominadas asistidas en máquina",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "biceps"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "ES04",
+      "nombre": "Jalón al pecho agarre ancho",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "biceps",
+        "romboides"
+      ],
+      "equipo": "polea",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": [
+        "lat pulldown"
+      ]
+    },
+    {
+      "id": "ES05",
+      "nombre": "Jalón al pecho agarre cerrado / neutro",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "biceps"
+      ],
+      "equipo": "polea",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "ES06",
+      "nombre": "Jalón tras nuca",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "biceps",
+        "trapecio"
+      ],
+      "equipo": "polea",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "ES07",
+      "nombre": "Remo con barra",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "trapecio",
+        "biceps",
+        "erectores"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES08",
+      "nombre": "Remo Pendlay",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "trapecio",
+        "erectores"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES09",
+      "nombre": "Remo con mancuerna a una mano",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "biceps"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "ES10",
+      "nombre": "Remo en polea baja sentado",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "biceps"
+      ],
+      "equipo": "polea",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "ES11",
+      "nombre": "Remo en máquina",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "biceps"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "ES12",
+      "nombre": "Remo en barra T",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "trapecio"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES13",
+      "nombre": "Pullover en polea alta (brazos rectos)",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "ES14",
+      "nombre": "Peso muerto convencional",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "erectores"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "isquiotibiales",
+        "trapecio",
+        "antebrazo"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES15",
+      "nombre": "Rack pull",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "erectores"
+      ],
+      "musculos_secundarios": [
+        "trapecio",
+        "gluteos"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES16",
+      "nombre": "Hiperextensión en banco romano 45°",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "erectores"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "isquiotibiales"
+      ],
+      "equipo": "banco",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": [
+        "extensión de espalda",
+        "extensión lumbar",
+        "back extension"
+      ]
+    },
+    {
+      "id": "ES17",
+      "nombre": "Buenos días con barra",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "erectores"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales",
+        "gluteos"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES18",
+      "nombre": "Encogimientos con barra",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "trapecio"
+      ],
+      "musculos_secundarios": [
+        "antebrazo"
+      ],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "ES19",
+      "nombre": "Encogimientos con mancuernas",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "trapecio"
+      ],
+      "musculos_secundarios": [
+        "antebrazo"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "ES20",
+      "nombre": "Hiperextensión en banco 90° (GHD)",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "erectores"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "isquiotibiales"
+      ],
+      "equipo": "banco",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": [
+        "glute ham developer",
+        "extensión de espalda 90°"
+      ]
+    },
+    {
+      "id": "ES21",
+      "nombre": "Extensión lumbar en máquina (sentado)",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "erectores"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": [
+        "máquina lumbar",
+        "back extension machine"
+      ]
+    },
+    {
+      "id": "ES22",
+      "nombre": "Remo invertido en barra",
+      "grupo": "ES",
+      "musculos_primarios": [
+        "dorsal"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "biceps"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "HO01",
+      "nombre": "Press militar con barra de pie",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_anterior"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_lateral",
+        "core"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "HO02",
+      "nombre": "Press de hombro con mancuernas sentado",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_anterior"
+      ],
+      "musculos_secundarios": [
+        "triceps",
+        "deltoides_lateral"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "HO03",
+      "nombre": "Press Arnold",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_anterior"
+      ],
+      "musculos_secundarios": [
+        "deltoides_lateral",
+        "triceps"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "HO04",
+      "nombre": "Press de hombro en máquina",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_anterior"
+      ],
+      "musculos_secundarios": [
+        "triceps"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "HO05",
+      "nombre": "Press de hombro en Smith",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_anterior"
+      ],
+      "musculos_secundarios": [
+        "triceps"
+      ],
+      "equipo": "smith",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "HO06",
+      "nombre": "Elevaciones laterales con mancuernas",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_lateral"
+      ],
+      "musculos_secundarios": [
+        "trapecio"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "HO07",
+      "nombre": "Elevaciones laterales en polea",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_lateral"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "HO08",
+      "nombre": "Elevaciones laterales en máquina",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_lateral"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "HO09",
+      "nombre": "Elevaciones frontales",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_anterior"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "HO10",
+      "nombre": "Pájaros con mancuernas",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_posterior"
+      ],
+      "musculos_secundarios": [
+        "romboides",
+        "trapecio"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "HO11",
+      "nombre": "Deltoides posterior en pec deck invertido",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_posterior"
+      ],
+      "musculos_secundarios": [
+        "romboides"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "HO12",
+      "nombre": "Face pull en polea",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_posterior"
+      ],
+      "musculos_secundarios": [
+        "manguito_rotador",
+        "trapecio"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": [
+        "jalón a la cara"
+      ]
+    },
+    {
+      "id": "HO13",
+      "nombre": "Remo al mentón",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "deltoides_lateral"
+      ],
+      "musculos_secundarios": [
+        "trapecio"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "HO14",
+      "nombre": "Rotación externa en polea",
+      "grupo": "HO",
+      "musculos_primarios": [
+        "manguito_rotador"
+      ],
+      "musculos_secundarios": [
+        "deltoides_posterior"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "BI01",
+      "nombre": "Curl con barra recta",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [
+        "braquial",
+        "antebrazo"
+      ],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "BI02",
+      "nombre": "Curl con barra Z",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [
+        "braquial"
+      ],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "BI03",
+      "nombre": "Curl alterno con mancuernas",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [
+        "braquial"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "BI04",
+      "nombre": "Curl martillo",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "braquial"
+      ],
+      "musculos_secundarios": [
+        "biceps",
+        "antebrazo"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "BI05",
+      "nombre": "Curl inclinado con mancuernas",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "BI06",
+      "nombre": "Curl predicador (banco Scott)",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [
+        "braquial"
+      ],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "BI07",
+      "nombre": "Curl concentrado",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "BI08",
+      "nombre": "Curl en polea baja",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [
+        "braquial"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "BI09",
+      "nombre": "Curl en máquina",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "BI10",
+      "nombre": "Curl araña",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "BI11",
+      "nombre": "Curl en polea alta",
+      "grupo": "BI",
+      "musculos_primarios": [
+        "biceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "TR01",
+      "nombre": "Press francés con barra Z",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "TR02",
+      "nombre": "Extensión sobre la cabeza con mancuerna",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "TR03",
+      "nombre": "Extensión sobre la cabeza en polea",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "TR04",
+      "nombre": "Jalón de tríceps en polea con barra",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "TR05",
+      "nombre": "Jalón de tríceps en polea con cuerda",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "TR06",
+      "nombre": "Jalón de tríceps a una mano",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "TR07",
+      "nombre": "Patada de tríceps",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "TR08",
+      "nombre": "Press de banca agarre cerrado",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [
+        "pectoral",
+        "deltoides_anterior"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "TR09",
+      "nombre": "Fondos en paralelas (énfasis tríceps)",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [
+        "pectoral",
+        "deltoides_anterior"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "TR10",
+      "nombre": "Fondos en banco",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "TR11",
+      "nombre": "Extensión de tríceps en máquina",
+      "grupo": "TR",
+      "musculos_primarios": [
+        "triceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "AN01",
+      "nombre": "Curl de muñeca",
+      "grupo": "AN",
+      "musculos_primarios": [
+        "antebrazo"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "AN02",
+      "nombre": "Curl de muñeca invertido",
+      "grupo": "AN",
+      "musculos_primarios": [
+        "antebrazo"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "AN03",
+      "nombre": "Curl invertido con barra",
+      "grupo": "AN",
+      "musculos_primarios": [
+        "antebrazo"
+      ],
+      "musculos_secundarios": [
+        "braquial",
+        "biceps"
+      ],
+      "equipo": "barra",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "AN04",
+      "nombre": "Paseo del granjero",
+      "grupo": "AN",
+      "musculos_primarios": [
+        "antebrazo"
+      ],
+      "musculos_secundarios": [
+        "trapecio",
+        "core"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "tiempo",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "AN05",
+      "nombre": "Rodillo de muñeca",
+      "grupo": "AN",
+      "musculos_primarios": [
+        "antebrazo"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "otro",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU01",
+      "nombre": "Sentadilla trasera con barra",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "aductores",
+        "erectores"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU02",
+      "nombre": "Sentadilla frontal",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "core"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU03",
+      "nombre": "Sentadilla goblet",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "core"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU04",
+      "nombre": "Sentadilla en Smith",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "smith",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU05",
+      "nombre": "Sentadilla hack en máquina",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU06",
+      "nombre": "Prensa de piernas 45°",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "isquiotibiales"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": [
+        "leg press"
+      ]
+    },
+    {
+      "id": "CU07",
+      "nombre": "Zancadas / estocadas",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": [
+        "lunges"
+      ]
+    },
+    {
+      "id": "CU08",
+      "nombre": "Sentadilla búlgara",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "CU09",
+      "nombre": "Subidas al cajón (step-up)",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "CU10",
+      "nombre": "Extensión de piernas en máquina",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "CU11",
+      "nombre": "Sentadilla péndulo",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "CU12",
+      "nombre": "Sissy squat",
+      "grupo": "CU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "FE01",
+      "nombre": "Peso muerto rumano con barra",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "erectores"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FE02",
+      "nombre": "Curl femoral acostado",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [
+        "gemelos"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "FE03",
+      "nombre": "Curl femoral sentado",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "FE04",
+      "nombre": "Curl femoral de pie",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "FE05",
+      "nombre": "Peso muerto piernas rígidas",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [
+        "erectores",
+        "gluteos"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FE06",
+      "nombre": "Curl nórdico",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "FE07",
+      "nombre": "Peso muerto rumano con mancuernas",
+      "grupo": "FE",
+      "musculos_primarios": [
+        "isquiotibiales"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "erectores"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "GL01",
+      "nombre": "Hip thrust con barra",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": [
+        "empuje de cadera"
+      ]
+    },
+    {
+      "id": "GL02",
+      "nombre": "Hip thrust en máquina",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales"
+      ],
+      "equipo": "maquina",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "GL03",
+      "nombre": "Puente de glúteo",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "GL04",
+      "nombre": "Patada de glúteo en polea",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "GL05",
+      "nombre": "Patada de glúteo en máquina",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "GL06",
+      "nombre": "Abducción de cadera en máquina",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "abductores"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "GL07",
+      "nombre": "Aducción de cadera en máquina",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "aductores"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "GL08",
+      "nombre": "Abducción en polea",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "abductores"
+      ],
+      "musculos_secundarios": [
+        "gluteos"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "GL09",
+      "nombre": "Peso muerto sumo",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "aductores",
+        "cuadriceps",
+        "erectores"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "GL10",
+      "nombre": "Sentadilla sumo",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "aductores",
+        "cuadriceps"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "GL11",
+      "nombre": "Hiperextensión enfocada en glúteo (banco 45°)",
+      "grupo": "GL",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales",
+        "erectores"
+      ],
+      "equipo": "banco",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": [
+        "hiperextensión de glúteo",
+        "extensión de espalda para glúteo",
+        "banco romano glúteo",
+        "glute hyperextension"
+      ]
+    },
+    {
+      "id": "PA01",
+      "nombre": "Elevación de talones de pie en máquina",
+      "grupo": "PA",
+      "musculos_primarios": [
+        "gemelos"
+      ],
+      "musculos_secundarios": [
+        "soleo"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "PA02",
+      "nombre": "Elevación de talones sentado",
+      "grupo": "PA",
+      "musculos_primarios": [
+        "soleo"
+      ],
+      "musculos_secundarios": [
+        "gemelos"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PA03",
+      "nombre": "Elevación de talones en prensa",
+      "grupo": "PA",
+      "musculos_primarios": [
+        "gemelos"
+      ],
+      "musculos_secundarios": [
+        "soleo"
+      ],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PA04",
+      "nombre": "Elevación de talones en Smith",
+      "grupo": "PA",
+      "musculos_primarios": [
+        "gemelos"
+      ],
+      "musculos_secundarios": [
+        "soleo"
+      ],
+      "equipo": "smith",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "PA05",
+      "nombre": "Elevación de talones a una pierna",
+      "grupo": "PA",
+      "musculos_primarios": [
+        "gemelos"
+      ],
+      "musculos_secundarios": [
+        "soleo"
+      ],
+      "equipo": "mancuerna",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "por_mano",
+      "alias": []
+    },
+    {
+      "id": "AB01",
+      "nombre": "Plancha frontal",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "core"
+      ],
+      "musculos_secundarios": [
+        "abdomen"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "tiempo",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB02",
+      "nombre": "Plancha lateral",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "oblicuos"
+      ],
+      "musculos_secundarios": [
+        "core"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "tiempo",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB03",
+      "nombre": "Crunch abdominal",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB04",
+      "nombre": "Crunch en polea de rodillas",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "AB05",
+      "nombre": "Crunch en máquina",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "maquina",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "AB06",
+      "nombre": "Elevación de piernas colgado",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [
+        "oblicuos"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB07",
+      "nombre": "Elevación de rodillas en paralelas",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB08",
+      "nombre": "Elevación de piernas acostado",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB09",
+      "nombre": "Rueda abdominal",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "abdomen"
+      ],
+      "musculos_secundarios": [
+        "core",
+        "dorsal"
+      ],
+      "equipo": "otro",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB10",
+      "nombre": "Giros rusos",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "oblicuos"
+      ],
+      "musculos_secundarios": [
+        "abdomen"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "AB11",
+      "nombre": "Pallof press",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "core"
+      ],
+      "musculos_secundarios": [
+        "oblicuos"
+      ],
+      "equipo": "polea",
+      "mecanica": "aislamiento",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "AB12",
+      "nombre": "Leñador en polea",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "oblicuos"
+      ],
+      "musculos_secundarios": [
+        "core"
+      ],
+      "equipo": "polea",
+      "mecanica": "compuesto",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "placas",
+      "alias": []
+    },
+    {
+      "id": "AB13",
+      "nombre": "Bicicleta abdominal",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "oblicuos"
+      ],
+      "musculos_secundarios": [
+        "abdomen"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "AB14",
+      "nombre": "Dead bug",
+      "grupo": "AB",
+      "musculos_primarios": [
+        "core"
+      ],
+      "musculos_secundarios": [
+        "abdomen"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "aislamiento",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "FU01",
+      "nombre": "Kettlebell swing",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "isquiotibiales",
+        "erectores",
+        "core"
+      ],
+      "equipo": "kettlebell",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FU02",
+      "nombre": "Cargada (clean)",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "gluteos"
+      ],
+      "musculos_secundarios": [
+        "cuadriceps",
+        "trapecio",
+        "erectores"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FU03",
+      "nombre": "Thruster",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior",
+        "gluteos",
+        "triceps"
+      ],
+      "equipo": "barra",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FU04",
+      "nombre": "Burpees",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "pectoral",
+        "cuadriceps",
+        "core"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "FU05",
+      "nombre": "Battle ropes",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior",
+        "core"
+      ],
+      "equipo": "otro",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "tiempo",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "FU06",
+      "nombre": "Empuje de trineo",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "cardiovascular"
+      ],
+      "equipo": "otro",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FU07",
+      "nombre": "Turkish get-up",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "core"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior",
+        "gluteos"
+      ],
+      "equipo": "kettlebell",
+      "mecanica": "compuesto",
+      "unilateral": true,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FU08",
+      "nombre": "Wall ball",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "deltoides_anterior",
+        "gluteos"
+      ],
+      "equipo": "otro",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_reps",
+      "carga": "total",
+      "alias": []
+    },
+    {
+      "id": "FU09",
+      "nombre": "Saltos al cajón",
+      "grupo": "FU",
+      "musculos_primarios": [
+        "cuadriceps"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "gemelos"
+      ],
+      "equipo": "peso_corporal",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "peso_corporal",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA01",
+      "nombre": "Caminadora",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA02",
+      "nombre": "Bicicleta estática",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "cuadriceps"
+      ],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA03",
+      "nombre": "Elíptica",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA04",
+      "nombre": "Remo ergómetro",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "dorsal"
+      ],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA05",
+      "nombre": "Escaladora / stairmaster",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "gluteos",
+        "cuadriceps"
+      ],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA06",
+      "nombre": "Bicicleta de aire (assault bike)",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA07",
+      "nombre": "Saltar la cuerda",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "gemelos"
+      ],
+      "equipo": "otro",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    },
+    {
+      "id": "CA08",
+      "nombre": "Spinning",
+      "grupo": "CA",
+      "musculos_primarios": [
+        "cardiovascular"
+      ],
+      "musculos_secundarios": [
+        "cuadriceps"
+      ],
+      "equipo": "cardio",
+      "mecanica": "compuesto",
+      "unilateral": false,
+      "registro": "cardio",
+      "carga": "ninguna",
+      "alias": []
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bitácora de Hierro</title>
+<meta name="description" content="Tu rutina del gimnasio, tus series y tu progreso.">
+<meta name="theme-color" content="#2A52D4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bitácora">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top" id="top" hidden>
+    <div><div class="brand">Bitácora de Hierro</div><h1 class="title" id="vtitle">Hoy</h1></div>
+    <div class="save" id="save" aria-live="polite"></div>
+  </header>
+  <main id="app"><div class="card empty" style="margin-top:40px"><h3>Cargando…</h3></div></main>
+  <p class="ver" id="ver"></p>
+</div>
+
+<div id="timer" hidden>
+  <div class="in">
+    <div><div class="t-lb">Descanso</div></div>
+    <div class="t-num">0:00</div>
+    <button type="button" data-act="rest-add">+15 s</button>
+    <button type="button" data-act="rest-skip">Saltar</button>
+    <div class="t-bar"></div>
+  </div>
+</div>
+
+<nav class="tabs" id="tabs" aria-label="Secciones" hidden>
+  <div class="in">
+    <button type="button" data-act="tab" data-v="hoy" id="tab-hoy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/></svg>
+      <span id="tab-hoy-l">Hoy</span><i class="dot" id="tab-dot" hidden></i>
+    </button>
+    <button type="button" data-act="tab" data-v="rutinas" id="tab-rutinas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+      <span>Rutinas</span>
+    </button>
+    <button type="button" data-act="tab" data-v="historial" id="tab-historial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+      <span>Historial</span>
+    </button>
+    <button type="button" data-act="tab" data-v="cuenta" id="tab-cuenta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      <span>Cuenta</span>
+    </button>
+  </div>
+</nav>
+
+<div id="overlay"></div>
+<div id="toast" hidden></div>
+<input type="file" id="file-import" accept="application/json,.json" hidden>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
