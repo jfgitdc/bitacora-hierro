@@ -10,4 +10,4 @@ export const firebaseConfig = {
   measurementId: "G-39S0VY6Y5Q"
 };
 
-export const APP_VERSION = "1.1.0";
+export const APP_VERSION = "1.2.0";
