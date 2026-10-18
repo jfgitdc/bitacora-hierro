@@ -1,4 +1,4 @@
-// Bitácora de Hierro · v1.1
+// Bitácora de Hierro · v1.2
 // App web instalable (PWA) con Firebase Authentication + Cloud Firestore (con caché sin conexión).
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut }
@@ -28,8 +28,19 @@ const IC = {
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg>',
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>',
+  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4ZM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M9 21h6M10 17h4"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>'
 };
+
+const ZONAS = [
+  { id: 'sup', nombre: 'Tren superior', grupos: ['PE', 'ES', 'HO', 'BI', 'TR', 'AN'] },
+  { id: 'inf', nombre: 'Tren inferior', grupos: ['CU', 'FE', 'GL', 'PA'] },
+  { id: 'core', nombre: 'Core', grupos: ['AB'] },
+  { id: 'cardio', nombre: 'Cardio y funcional', grupos: ['FU', 'CA'] }
+];
+const EQUIPOS = { barra: 'Barra', mancuerna: 'Mancuerna', maquina: 'Máquina', polea: 'Polea', smith: 'Smith', kettlebell: 'Kettlebell', banco: 'Banco', peso_corporal: 'Peso corporal', cardio: 'Cardio', otro: 'Otro' };
 
 /* ================= Estado ================= */
 const S = {
@@ -38,7 +49,8 @@ const S = {
   perfil: null, perfilLoaded: false, plantillas: {}, plLoaded: false,
   sesiones: [], sesLoaded: false, activa: null, actLoaded: false,
   tab: 'hoy', rutView: 'semana', editPl: null, verSesion: null,
-  picker: null, confirm: null, timer: null, needRender: false
+  picker: null, confirm: null, timer: null, needRender: false,
+  musculos: {}, exQ: '', exZona: '', exEquipo: '', exMios: false, verEj: null, progView: 'resumen'
 };
 let unsubs = [], lastPerfilEdit = 0;
 const lastPlEdit = {};
@@ -139,7 +151,7 @@ function suscribir() {
 
 /* ================= Catálogo ================= */
 fetch('catalogo-ejercicios.json').then(r => { if (!r.ok) throw new Error(); return r.json(); })
-  .then(d => { S.catalog = d.ejercicios || []; S.grupos = d.grupos || []; buildMap(); scheduleRender(); })
+  .then(d => { S.catalog = d.ejercicios || []; S.grupos = d.grupos || []; S.musculos = Object.fromEntries((d.musculos || []).map(m => [m.id, m.nombre])); buildMap(); scheduleRender(); })
   .catch(() => { S.catErr = true; scheduleRender(); });
 
 function buildMap() {
@@ -215,10 +227,13 @@ function terminar() {
   const fin = new Date(); const ses = clone(a); delete ses.id;
   ses.fin = fin.toISOString(); ses.fecha = a.inicio; ses.duracionMin = Math.max(1, Math.round((fin - new Date(a.inicio)) / 60000));
   ses.items = ses.items.map(it => { it.series = it.series.filter(s => s.hecho); return it; }).filter(it => it.series.length);
+  const prs = recordsNuevos(ses.items);
   escribir(R.ses(a.id), ses);
+  S.sesiones = [Object.assign({ id: a.id }, ses)].concat(S.sesiones.filter(x => x.id !== a.id)); // se ve de inmediato, sin esperar a Firestore
   S.activa = null; S.timer = null; tick(); clearTimeout(timers.act); escribir(R.activa(), null); liberar();
-  S.tab = 'historial'; S.verSesion = a.id;
-  toast(navigator.onLine ? 'Sesión guardada' : 'Sesión guardada en el celular · se sube al volver la señal');
+  S.tab = 'progreso'; S.progView = 'sesiones'; S.verSesion = a.id;
+  if (prs.length) toast('Nuevo récord: ' + prs.slice(0, 2).map(x => getEj(x.ej).nombre + ' ' + x.label).join(' · ') + (prs.length > 2 ? ` y ${prs.length - 2} más` : ''));
+  else toast(navigator.onLine ? 'Sesión guardada' : 'Sesión guardada en el celular · se sube al volver la señal');
   render(); window.scrollTo(0, 0);
 }
 function descartar() { S.activa = null; S.timer = null; tick(); clearTimeout(timers.act); escribir(R.activa(), null); liberar(); render(); toast('Sesión descartada'); }
@@ -329,9 +344,9 @@ function cardSesion(it, i, n) {
   if (it.descanso) meta += `<span>· descanso ${it.descanso} s</span>`;
   if (it.origen === 'cambio') meta += ` <span class="tag swap">Reemplaza a ${esc(it.reemplazaA)} · ${esc(getEj(it.reemplazaA).nombre)}</span>`;
   if (it.origen === 'agregado') meta += ' <span class="tag add">Agregado hoy</span>';
-  let h = `<article class="ex ${it.origen === 'cambio' ? 'is-swap' : ''}"><div class="ex-h"><div><span class="code">${esc(it.ej)}</span><h3>${esc(ej.nombre)}</h3><div class="meta">${meta}</div></div>
+  let h = `<article class="ex ${it.origen === 'cambio' ? 'is-swap' : ''}"><div class="ex-h"><button class="ex-title" data-act="ej-ver" data-id="${esc(it.ej)}">${thumb(ej, 'sm')}<span><span class="code">${esc(it.ej)}</span><h3>${esc(ej.nombre)}</h3></span></button>
     <div class="tools"><button class="icon" data-act="item-swap" data-i="${i}" aria-label="Cambiar ejercicio" title="Cambiar ejercicio">${IC.swap}</button>
-    <button class="icon danger" data-act="item-del" data-i="${i}" aria-label="Quitar de esta sesión" title="Quitar">${IC.del}</button></div></div>`;
+    <button class="icon danger" data-act="item-del" data-i="${i}" aria-label="Quitar de esta sesión" title="Quitar">${IC.del}</button></div></div><div class="meta" style="margin-top:6px">${meta}</div>`;
   if (it.nota) h += `<div class="note">${esc(it.nota)}</div>`;
   if (u) h += `<div class="hint">Última vez (${fechaCorta(u.fecha)}): <b>${u.series.map(s => fmtSet(s, ej, u.carga || it.carga)).join(' · ')}</b></div>`;
   if (it.objetivo && it.objetivo.length) h += `<div class="hint">Meta de la plantilla: ${it.objetivo.map(s => fmtSet(s, ej, it.carga)).join(' · ')}</div>`;
@@ -412,22 +427,19 @@ function filaHist(s) {
     <div style="min-width:0"><div class="nm">${esc(s.nombre)}</div><div class="stats"><span>${d.toLocaleDateString('es-CO', { weekday: 'long' })}</span><span>${s.duracionMin || 0} min</span><span>${seriesHechas(s)} series</span><span>${volumen(s).toLocaleString('es-CO')} kg</span></div></div></button></li>`;
 }
 function vHistorial() {
-  if (!S.sesLoaded) return vCargando();
-  if (S.verSesion) { const s = S.sesiones.find(x => x.id === S.verSesion); if (s) return vSesionDet(s); S.verSesion = null; }
   if (!S.sesiones.length) return '<div class="card empty"><h3>Aún no hay sesiones</h3><p class="muted">Cuando termines tu primer entrenamiento aparecerá aquí, con cada serie que registraste.</p></div>';
-  const semanaMs = Date.now() - 7 * 864e5; const n7 = S.sesiones.filter(s => new Date(s.fecha) > semanaMs).length;
-  return `<div class="kpis" style="margin-top:8px"><div class="kpi"><b>${S.sesiones.length}</b><span>sesiones</span></div><div class="kpi"><b>${n7}</b><span>últimos 7 días</span></div><div class="kpi"><b>${S.sesiones.reduce((n, s) => n + seriesHechas(s), 0)}</b><span>series</span></div></div>
-    <h2 class="sec">Sesiones</h2><ul class="hist">${S.sesiones.map(filaHist).join('')}</ul>`;
+  return `<ul class="hist">${S.sesiones.map(filaHist).join('')}</ul>`;
 }
 function vSesionDet(s) {
-  let html = `<div class="row" style="margin:6px 0 10px"><button class="btn sm ghost" data-act="ses-back">${IC.back} Historial</button></div>
+  const st = stats();
+  let html = `<div class="row" style="margin:6px 0 10px"><button class="btn sm ghost" data-act="ses-back">${IC.back} Sesiones</button></div>
   <div class="card"><div class="brand">${esc(fechaLarga(s.fecha))} · ${hora(s.fecha)}</div><div class="title" style="font-size:28px">${esc(s.nombre)}</div>
   <div class="kpis" style="margin-top:12px"><div class="kpi"><b>${s.duracionMin || 0}</b><span>minutos</span></div><div class="kpi"><b>${seriesHechas(s)}</b><span>series</span></div><div class="kpi"><b>${volumen(s).toLocaleString('es-CO')}</b><span>kg de volumen</span></div></div></div>
   <div class="stack" style="margin-top:12px">`;
   for (const it of s.items || []) {
     const ej = getEj(it.ej);
     html += `<article class="ex ${it.origen === 'cambio' ? 'is-swap' : ''}"><span class="code">${esc(it.ej)}</span><h3>${esc(ej.nombre)}</h3>
-    <div class="meta"><span>${esc(grupoNombre(ej.grupo))}</span>${it.origen === 'cambio' ? ` <span class="tag swap">Reemplazó a ${esc(it.reemplazaA)}</span>` : ''}${it.origen === 'agregado' ? ' <span class="tag add">Agregado</span>' : ''}</div>
+    <div class="meta"><span>${esc(grupoNombre(ej.grupo))}</span>${st.prSet.has(s.id + '|' + it.ej) ? ` <span class="tag pr">${IC.trophy} Récord</span>` : ''}${it.origen === 'cambio' ? ` <span class="tag swap">Reemplazó a ${esc(it.reemplazaA)}</span>` : ''}${it.origen === 'agregado' ? ' <span class="tag add">Agregado</span>' : ''}</div>
     <div class="setchips">${(it.series || []).map(x => `<span>${fmtSet(x, ej, it.carga)}</span>`).join('')}</div></article>`;
   }
   return html + `</div><button class="btn ghost danger block" style="margin-top:16px" data-act="ses-del" data-id="${esc(s.id)}">Eliminar esta sesión</button>`;
@@ -447,6 +459,239 @@ function vCuenta() {
     <h2 class="sec">Seguridad</h2>
     <div class="stack"><button class="btn block" data-act="cambiar-pass">Cambiar contraseña</button>
       <button class="btn block danger" data-act="logout">Cerrar sesión</button></div>`;
+}
+
+/* ================= Imágenes de ejercicios ================= */
+function thumb(ej, size = '') {
+  if (ej.imagen) return `<span class="thumb ${size}"><img src="${esc(ej.imagen)}-0.webp" alt="" loading="lazy" decoding="async"></span>`;
+  return `<span class="thumb ${size} noimg" aria-hidden="true">${esc(ej.grupo || '··')}</span>`;
+}
+
+/* ================= Métricas y récords ================= */
+// Mide lo mejor que hiciste en un ejercicio dentro de una sesión.
+// score sirve para comparar sesiones; y es el valor que se grafica.
+function medir(it, ej) {
+  const sets = (it.series || []).filter(s => s.hecho !== false);
+  if (!sets.length) return null;
+  const f = (it.carga || ej.carga) === 'por_mano' ? 2 : 1;
+  let best = null, score = -1, maxKg = 0, maxReps = 0, vol = 0, y = 0;
+  for (const s of sets) {
+    const kg = isNum(s.kg) ? +s.kg : 0, reps = isNum(s.reps) ? +s.reps : 0;
+    let sc;
+    if (ej.registro === 'peso_reps') { if (!kg || !reps) continue; sc = kg * (1 + reps / 30); vol += kg * reps * f; }
+    else if (ej.registro === 'peso_corporal') { if (!reps) continue; sc = kg * 1000 + reps; }
+    else if (ej.registro === 'tiempo') { const seg = isNum(s.seg) ? +s.seg : 0; if (!seg) continue; sc = kg * 1000 + seg; y = Math.max(y, seg); }
+    else { const min = isNum(s.min) ? +s.min : 0; if (!min) continue; sc = min; y = Math.max(y, min); }
+    maxKg = Math.max(maxKg, kg); maxReps = Math.max(maxReps, reps);
+    if (sc > score) { score = sc; best = s; }
+  }
+  if (!best) return null;
+  if (ej.registro === 'peso_reps') y = Math.round(score * 2) / 2; // 1RM estimado, redondeado a 0,5 kg
+  return { score, y, maxKg, maxReps, vol: Math.round(vol), sets: sets.length, label: fmtSet(best, ej, it.carga) };
+}
+let statsCache = { ref: null, cat: null, v: null };
+function stats() {
+  if (statsCache.ref === S.sesiones && statsCache.cat === S.catMap) return statsCache.v;
+  const porEj = {}, prSet = new Set();
+  const ses = [...S.sesiones].sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+  for (const s of ses) for (const it of s.items || []) {
+    const ej = getEj(it.ej); const m = medir(it, ej); if (!m) continue;
+    const e = porEj[it.ej] || (porEj[it.ej] = { hist: [], best: null, prs: [] });
+    e.hist.push(Object.assign({ fecha: s.fecha, id: s.id }, m));
+    if (e.best && m.score > e.best.score + 1e-9) { prSet.add(s.id + '|' + it.ej); e.prs.push(Object.assign({ fecha: s.fecha, id: s.id, ej: it.ej }, m)); }
+    if (!e.best || m.score > e.best.score) e.best = Object.assign({ fecha: s.fecha }, m);
+  }
+  statsCache = { ref: S.sesiones, cat: S.catMap, v: { porEj, prSet } };
+  return statsCache.v;
+}
+function recordsNuevos(items) {
+  const { porEj } = stats(); const out = [];
+  for (const it of items) {
+    const ej = getEj(it.ej); const m = medir(it, ej); const prev = porEj[it.ej];
+    if (m && prev && prev.best && m.score > prev.best.score + 1e-9) out.push({ ej: it.ej, label: m.label });
+  }
+  return out;
+}
+function enRutina() { const set = new Set(); for (const p of Object.values(S.plantillas)) for (const it of p.items || []) set.add(it.ej); return set; }
+function yLabel(ej, hist) {
+  if (ej.registro === 'peso_reps') return { titulo: '1RM estimado', unidad: 'kg' };
+  if (ej.registro === 'peso_corporal') return hist.some(h => h.maxKg > 0) ? { titulo: 'Lastre máximo', unidad: 'kg', campo: 'maxKg' } : { titulo: 'Repeticiones máximas', unidad: 'reps', campo: 'maxReps' };
+  if (ej.registro === 'tiempo') return { titulo: 'Tiempo máximo', unidad: 's' };
+  return { titulo: 'Duración', unidad: 'min' };
+}
+
+/* ================= Gráficos (SVG) ================= */
+const CHARTS = {};
+const fmtNum = n => (Math.round(n * 10) / 10).toLocaleString('es-CO');
+function niceRange(min, max) {
+  if (min === max) { min -= 1; max += 1; }
+  const pad = (max - min) * 0.15; min = Math.max(0, min - pad); max = max + pad;
+  const step = Math.pow(10, Math.floor(Math.log10((max - min) / 3)));
+  const st = [1, 2, 2.5, 5, 10].map(m => m * step).find(x => (max - min) / x <= 4) || step * 10;
+  return { min: Math.floor(min / st) * st, max: Math.ceil(max / st) * st, step: st };
+}
+function lineChart(id, pts, unidad) {
+  const W = 340, H = 180, L = 40, Rr = 14, T = 16, B = 26;
+  if (!pts.length) return '';
+  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs); const r = niceRange(Math.min(...ys), Math.max(...ys));
+  const X = x => x1 === x0 ? (L + W - Rr) / 2 : L + (x - x0) / (x1 - x0) * (W - L - Rr);
+  const Y = y => T + (1 - (y - r.min) / (r.max - r.min)) * (H - T - B);
+  let g = '';
+  for (let v = r.min; v <= r.max + 1e-9; v += r.step) g += `<line class="ch-grid" x1="${L}" x2="${W - Rr}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ch-tick" x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${fmtNum(v)}</text>`;
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + X(p.x).toFixed(1) + ' ' + Y(p.y).toFixed(1)).join(' ');
+  const area = pts.length > 1 ? `<path class="ch-area" d="${d} L${X(x1)} ${H - B} L${X(x0)} ${H - B} Z"/>` : '';
+  const last = pts[pts.length - 1];
+  const xl = `<text class="ch-tick" x="${X(x0)}" y="${H - 8}" text-anchor="${pts.length > 1 ? 'start' : 'middle'}">${fechaCorta(new Date(x0).toISOString())}</text>` + (pts.length > 1 ? `<text class="ch-tick" x="${X(x1)}" y="${H - 8}" text-anchor="end">${fechaCorta(new Date(x1).toISOString())}</text>` : '');
+  CHARTS[id] = { pts: pts.map(p => ({ cx: X(p.x), cy: Y(p.y), t: `${fmtNum(p.y)} ${unidad}`, s: fechaCorta(new Date(p.x).toISOString()) + (p.sub ? ' · ' + p.sub : '') })), W, H, T, B };
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución: último valor ${fmtNum(last.y)} ${unidad}" data-chart="${id}">
+    ${g}${area}<path class="ch-line" d="${d}"/>
+    ${pts.map(p => `<circle class="ch-dot" cx="${X(p.x)}" cy="${Y(p.y)}" r="4"/>`).join('')}
+    <circle class="ch-dot end" cx="${X(last.x)}" cy="${Y(last.y)}" r="5.5"/>
+    ${xl}<g class="ch-tip" hidden></g><rect class="ch-hit" x="0" y="0" width="${W}" height="${H}"/></svg></div>`;
+}
+function barChart(id, bars, unidad) {
+  const W = 340, H = 150, L = 8, Rr = 8, T = 18, B = 24; const n = bars.length;
+  const max = Math.max(1, ...bars.map(b => b.v)); const bw = (W - L - Rr) / n; const gap = 2;
+  const Y = v => T + (1 - v / max) * (H - T - B);
+  let marks = '';
+  bars.forEach((b, i) => {
+    const x = L + i * bw + gap / 2, w = bw - gap, y = Y(b.v), base = H - B, rr = Math.min(4, w / 2, base - y);
+    if (b.v > 0) marks += `<path class="ch-bar ${b.cur ? 'cur' : ''}" d="M${x} ${base} V${y + rr} Q${x} ${y} ${x + rr} ${y} H${x + w - rr} Q${x + w} ${y} ${x + w} ${y + rr} V${base} Z"/>`;
+    if (b.lbl) marks += `<text class="ch-tick" x="${x + w / 2}" y="${H - 8}" text-anchor="middle">${b.lbl}</text>`;
+    if (b.cur || b.v === max) marks += `<text class="ch-val" x="${x + w / 2}" y="${y - 5}" text-anchor="middle">${b.v}</text>`;
+  });
+  CHARTS[id] = { pts: bars.map((b, i) => ({ cx: L + i * bw + bw / 2, cy: Y(b.v), t: `${b.v} ${unidad}`, s: b.tip })), W, H, T, B, bars: true };
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Sesiones por semana" data-chart="${id}">
+    <line class="ch-axis" x1="${L}" x2="${W - Rr}" y1="${H - B}" y2="${H - B}"/>${marks}<g class="ch-tip" hidden></g><rect class="ch-hit" x="0" y="0" width="${W}" height="${H}"/></svg></div>`;
+}
+function chartTip(svg, clientX) {
+  const c = CHARTS[svg.dataset.chart]; if (!c) return;
+  const rect = svg.getBoundingClientRect(); const x = (clientX - rect.left) / rect.width * c.W;
+  let p = c.pts[0]; for (const q of c.pts) if (Math.abs(q.cx - x) < Math.abs(p.cx - x)) p = q;
+  const tw = Math.max(p.t.length, p.s.length) * 6.4 + 16, tx = Math.min(Math.max(p.cx - tw / 2, 2), c.W - tw - 2), ty = 0;
+  const g = svg.querySelector('.ch-tip'); g.removeAttribute('hidden');
+  g.innerHTML = `<line class="ch-cross" x1="${p.cx}" x2="${p.cx}" y1="${c.T}" y2="${c.H - c.B}"/>${c.bars ? '' : `<circle class="ch-dot end" cx="${p.cx}" cy="${p.cy}" r="6"/>`}
+    <rect class="ch-tipbg" x="${tx}" y="${ty}" width="${tw}" height="34" rx="6"/><text class="ch-tipt" x="${tx + 8}" y="${ty + 14}">${esc(p.t)}</text><text class="ch-tips" x="${tx + 8}" y="${ty + 28}">${esc(p.s)}</text>`;
+}
+document.addEventListener('pointerdown', e => { const svg = e.target.closest && e.target.closest('svg[data-chart]'); if (svg) chartTip(svg, e.clientX); });
+document.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const svg = e.target.closest && e.target.closest('svg[data-chart]'); if (svg) chartTip(svg, e.clientX); });
+document.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && e.target.matches && e.target.matches('svg[data-chart]')) e.target.querySelector('.ch-tip').setAttribute('hidden', ''); }, true);
+
+/* ================= Pantalla Ejercicios ================= */
+function exFiltrados() {
+  const words = norm(S.exQ).split(/\s+/).filter(Boolean); const zona = ZONAS.find(z => z.id === S.exZona);
+  const mios = S.exMios ? new Set([...enRutina(), ...Object.keys(stats().porEj)]) : null;
+  const todos = S.catalog.concat((S.perfil && S.perfil.personalizados) || []);
+  return todos.filter(e => (!zona || zona.grupos.includes(e.grupo)) && (!S.exEquipo || e.equipo === S.exEquipo) && (!mios || mios.has(e.id)) &&
+    (!words.length || (txt => words.every(w => txt.includes(w)))(norm(e.id + ' ' + e.nombre + ' ' + (e.alias || []).join(' ') + ' ' + grupoNombre(e.grupo) + ' ' +
+      [...(e.musculos_primarios || []), ...(e.musculos_secundarios || [])].map(m => S.musculos[m] || '').join(' ') + ' ' + (EQUIPOS[e.equipo] || '')))));
+}
+function exLista() {
+  if (S.catErr && !S.catalog.length) return '<p class="muted">No se pudo cargar el catálogo. Recarga la app.</p>';
+  const res = exFiltrados(); const rut = enRutina(); const { porEj } = stats();
+  if (!res.length) return `<div class="card empty"><h3>Sin resultados</h3><p class="muted">Prueba con otra palabra, por ejemplo "pecho", "mancuerna" o "glúteo".</p><button class="btn" data-act="ex-limpiar">Quitar filtros</button></div>`;
+  const orden = S.grupos.map(g => g.id).concat(['MI', '']);
+  const porGrupo = {}; for (const e of res) (porGrupo[e.grupo] || (porGrupo[e.grupo] = [])).push(e);
+  let html = `<p class="muted small" style="margin:0 0 4px">${res.length} ejercicios</p>`;
+  for (const g of Object.keys(porGrupo).sort((a, b) => orden.indexOf(a) - orden.indexOf(b))) {
+    html += `<h2 class="sec">${esc(grupoNombre(g) || 'Otros')} <span class="count">${porGrupo[g].length}</span></h2><div class="ex-grid">`;
+    for (const e of porGrupo[g]) {
+      const b = porEj[e.id] && porEj[e.id].best;
+      html += `<button class="ex-card" data-act="ej-ver" data-id="${esc(e.id)}">${thumb(e)}<span class="ex-card-b"><span class="code">${esc(e.id)}</span>
+        <span class="nm">${esc(e.nombre)}</span><span class="sub">${esc(EQUIPOS[e.equipo] || e.equipo || '')}</span>
+        ${b ? `<span class="tag pr">${IC.trophy} ${esc(b.label)}</span>` : rut.has(e.id) ? '<span class="tag add">En tu rutina</span>' : ''}</span></button>`;
+    }
+    html += '</div>';
+  }
+  return html;
+}
+function vEjercicios() {
+  const equiposUsados = [...new Set(S.catalog.map(e => e.equipo))].filter(Boolean);
+  return `<div class="ex-search"><span class="ic">${IC.search}</span><input class="inp" id="ex-q" type="search" placeholder="Busca por nombre, músculo o equipo" value="${esc(S.exQ)}" autocomplete="off" aria-label="Buscar ejercicios"></div>
+    <div class="chips-x" role="group" aria-label="Enfoque"><button class="chip ${!S.exZona ? 'on' : ''}" data-act="ex-zona" data-v="">Todo</button>${ZONAS.map(z => `<button class="chip ${S.exZona === z.id ? 'on' : ''}" data-act="ex-zona" data-v="${z.id}">${z.nombre}</button>`).join('')}</div>
+    <div class="chips-x small-chips" role="group" aria-label="Equipo"><button class="chip ${S.exMios ? 'on' : ''}" data-act="ex-mios">${IC.check.replace('<svg', '<svg width="14" height="14"')} Los que hago</button>
+      <button class="chip ${!S.exEquipo ? 'on' : ''}" data-act="ex-equipo" data-v="">Todo equipo</button>${equiposUsados.map(q => `<button class="chip ${S.exEquipo === q ? 'on' : ''}" data-act="ex-equipo" data-v="${q}">${EQUIPOS[q] || q}</button>`).join('')}</div>
+    <div id="ex-list">${exLista()}</div>`;
+}
+function vEjDetalle(id) {
+  const e = getEj(id); const st = stats().porEj[id]; const usados = plOrdenadas().filter(p => (p.items || []).some(it => it.ej === id));
+  const mus = (arr) => (arr || []).map(m => `<span class="tag">${esc(S.musculos[m] || m)}</span>`).join('');
+  let media;
+  if (e.imagen) media = `<div class="anim" role="img" aria-label="Posición inicial y final de ${esc(e.nombre)}"><img src="${esc(e.imagen)}-0.webp" alt=""><img class="f2" src="${esc(e.imagen)}-1.webp" alt=""><span class="anim-lb">Inicio ⇄ final</span></div>`;
+  else media = `<div class="anim noimg"><span>${esc(e.grupo || '')}</span><small>Sin imagen de referencia</small></div>`;
+  let prog = '';
+  if (st && st.hist.length) {
+    const yl = yLabel(e, st.hist);
+    const pts = st.hist.map(h => ({ x: new Date(h.fecha).getTime(), y: yl.campo ? h[yl.campo] : h.y, sub: h.label }));
+    const ult = st.hist[st.hist.length - 1];
+    prog = `<h2 class="sec">Tu progreso</h2>
+      <div class="kpis"><div class="kpi"><b>${esc(st.best.label)}</b><span>mejor serie</span></div>
+      <div class="kpi"><b>${fmtNum(yl.campo ? Math.max(...st.hist.map(h => h[yl.campo])) : st.best.y)}</b><span>${yl.titulo} (${yl.unidad})</span></div>
+      <div class="kpi"><b>${st.hist.length}</b><span>sesiones</span></div></div>
+      <div class="card" style="margin-top:8px"><div class="ch-head"><b>${yl.titulo}</b><span class="muted small">Toca el gráfico para ver cada sesión</span></div>
+      ${lineChart('ej-' + id, pts, yl.unidad)}
+      ${st.hist.length < 2 ? '<p class="muted small" style="margin:6px 0 0">Registra este ejercicio en más sesiones para ver la tendencia.</p>' : ''}
+      ${e.registro === 'peso_reps' ? '<p class="muted small" style="margin:6px 0 0">El 1RM estimado es el peso que podrías levantar una vez, calculado con la fórmula de Epley a partir de tu mejor serie. Sirve para comparar sesiones aunque cambien las repeticiones.</p>' : ''}</div>
+      <h2 class="sec">Últimas sesiones</h2><ul class="mini-hist">${st.hist.slice(-5).reverse().map(h => `<li><span>${fechaCorta(h.fecha)}</span><b>${esc(h.label)}</b><span class="muted">${h.sets} series${h.vol ? ' · ' + h.vol.toLocaleString('es-CO') + ' kg' : ''}</span>${stats().prSet.has(h.id + '|' + id) ? `<span class="tag pr">${IC.trophy}</span>` : ''}</li>`).join('')}</ul>
+      <p class="muted small">Última vez: ${fechaLarga(ult.fecha)}</p>`;
+  } else prog = '<h2 class="sec">Tu progreso</h2><p class="muted small">Aún no has registrado este ejercicio. Cuando lo hagas, aquí verás tu evolución y tus récords.</p>';
+  const pls = plOrdenadas();
+  return `<div class="back" data-act="ej-cerrar"></div><section class="sheet ej-sheet" role="dialog" aria-modal="true" aria-label="${esc(e.nombre)}">
+    <div class="sheet-h"><div style="min-width:0"><span class="code">${esc(e.id)}</span><h2>${esc(e.nombre)}</h2></div><button class="btn sm" data-act="ej-cerrar">Cerrar</button></div>
+    <div class="sheet-body">${media}
+    ${e.imagen ? '<p class="credit">Imagen: Free Exercise DB · dominio público</p>' : ''}
+    <dl class="ej-dl"><dt>Grupo</dt><dd>${esc(grupoNombre(e.grupo))}</dd>
+      ${(e.musculos_primarios || []).length ? `<dt>Principal</dt><dd>${mus(e.musculos_primarios)}</dd>` : ''}
+      ${(e.musculos_secundarios || []).length ? `<dt>Secundarios</dt><dd>${mus(e.musculos_secundarios)}</dd>` : ''}
+      <dt>Equipo</dt><dd>${esc(EQUIPOS[e.equipo] || e.equipo || '—')}${e.unilateral ? ' · un lado a la vez' : ''}</dd>
+      <dt>Tipo</dt><dd>${e.mecanica === 'compuesto' ? 'Compuesto (varias articulaciones)' : e.mecanica === 'aislamiento' ? 'Aislamiento (un músculo)' : '—'}</dd>
+      <dt>Se registra</dt><dd>${esc(REGISTROS[e.registro] || '')}</dd></dl>
+    ${usados.length ? `<p class="small" style="margin:10px 0 0">En tus plantillas: ${usados.map(p => `<b>${esc(p.nombre)}</b>`).join(', ')}</p>` : ''}
+    ${prog}
+    <h2 class="sec">Agregar</h2><div class="stack">
+      ${S.activa ? `<button class="btn primary block" data-act="ej-a-sesion" data-id="${esc(id)}">${IC.plus} Agregar a la sesión de hoy</button>` : ''}
+      ${pls.length ? `<div class="row" style="flex-wrap:nowrap"><select class="inp" id="ej-pl" aria-label="Plantilla">${pls.map(p => `<option value="${esc(p.id)}">${esc(p.nombre)}</option>`).join('')}</select><button class="btn" data-act="ej-a-pl" data-id="${esc(id)}" style="flex:none">Agregar</button></div>` : ''}
+    </div></div></section>`;
+}
+
+/* ================= Pantalla Progreso ================= */
+function lunes(d) { const x = new Date(d); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; }
+function vProgreso() {
+  if (!S.sesLoaded) return vCargando();
+  const seg = `<div class="seg"><button class="${S.progView === 'resumen' ? 'on' : ''}" data-act="prog-view" data-v="resumen">Resumen</button><button class="${S.progView === 'sesiones' ? 'on' : ''}" data-act="prog-view" data-v="sesiones">Sesiones</button></div>`;
+  if (S.progView === 'sesiones') {
+    if (S.verSesion) { const s = S.sesiones.find(x => x.id === S.verSesion); if (s) return vSesionDet(s); S.verSesion = null; }
+    return seg + vHistorial();
+  }
+  if (!S.sesiones.length) return seg + '<div class="card empty"><h3>Tu progreso aparecerá aquí</h3><p class="muted">Después de tu primer entrenamiento verás tus semanas, el trabajo por grupo muscular y tus récords.</p></div>';
+  const st = stats(); const hoy = lunes(new Date());
+  // Sesiones por semana (12 semanas)
+  const semanas = [];
+  for (let i = 11; i >= 0; i--) { const ini = new Date(hoy); ini.setDate(ini.getDate() - i * 7); semanas.push({ ini, v: 0 }); }
+  for (const s of S.sesiones) { const l = lunes(s.fecha).getTime(); const w = semanas.find(x => x.ini.getTime() === l); if (w) w.v++; }
+  const bars = semanas.map((w, i) => ({ v: w.v, cur: i === 11, lbl: (i % 3 === 2 || i === 11) ? w.ini.getDate() + '/' + (w.ini.getMonth() + 1) : '', tip: 'Semana del ' + fechaCorta(w.ini.toISOString()) }));
+  let racha = 0; for (let i = 11; i >= 0; i--) { if (semanas[i].v) racha++; else if (i === 11) continue; else break; }
+  const mesIni = new Date(); mesIni.setDate(1); mesIni.setHours(0, 0, 0, 0);
+  const delMes = S.sesiones.filter(s => new Date(s.fecha) >= mesIni).length;
+  // Series por grupo muscular esta semana
+  const grupos = {}; let seriesSem = 0;
+  for (const s of S.sesiones) if (new Date(s.fecha) >= hoy) for (const it of s.items || []) { const n = (it.series || []).filter(x => x.hecho !== false).length; const g = getEj(it.ej).grupo || 'MI'; grupos[g] = (grupos[g] || 0) + n; seriesSem += n; }
+  const gl = Object.entries(grupos).sort((a, b) => b[1] - a[1]); const gmax = Math.max(1, ...gl.map(x => x[1]));
+  // Récords recientes (30 días)
+  const desde = Date.now() - 30 * 864e5;
+  const prs = Object.values(st.porEj).flatMap(e => e.prs).filter(p => new Date(p.fecha).getTime() >= desde).sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 8);
+  // Tus ejercicios
+  const mis = Object.entries(st.porEj).map(([id, e]) => ({ id, e, last: e.hist[e.hist.length - 1] })).sort((a, b) => b.last.fecha.localeCompare(a.last.fecha));
+  const trend = e => { const h = e.hist; if (h.length < 2) return '<span class="trend">nuevo</span>'; const a = h[h.length - 2].score, b = h[h.length - 1].score; return b > a + 1e-9 ? '<span class="trend up" aria-label="Subió">▲</span>' : b < a - 1e-9 ? '<span class="trend down" aria-label="Bajó">▼</span>' : '<span class="trend" aria-label="Igual">=</span>'; };
+  return seg + `<div class="kpis"><div class="kpi"><b>${delMes}</b><span>sesiones este mes</span></div><div class="kpi"><b>${racha}</b><span>semanas seguidas</span></div><div class="kpi"><b>${seriesSem}</b><span>series esta semana</span></div></div>
+    <div class="card" style="margin-top:12px"><div class="ch-head"><b>Sesiones por semana</b><span class="muted small">Últimas 12 semanas</span></div>${barChart('semanas', bars, 'sesiones')}</div>
+    <h2 class="sec">Esta semana por grupo muscular</h2>
+    ${gl.length ? `<div class="card hbars">${gl.map(([g, n]) => `<div class="hb"><span class="hb-l">${esc(grupoNombre(g) || 'Otros')}</span><span class="hb-t"><i style="width:${n / gmax * 100}%"></i></span><span class="hb-v">${n}</span></div>`).join('')}<p class="muted small" style="margin:6px 0 0">Series completadas desde el lunes.</p></div>` : '<p class="muted small">Aún no entrenas esta semana.</p>'}
+    <h2 class="sec">Récords de los últimos 30 días</h2>
+    ${prs.length ? `<ul class="pr-list">${prs.map(p => `<li><button data-act="ej-ver" data-id="${esc(p.ej)}"><span class="pr-ic">${IC.trophy}</span><span style="min-width:0"><span class="nm">${esc(getEj(p.ej).nombre)}</span><span class="sub">${fechaCorta(p.fecha)}</span></span><b>${esc(p.label)}</b></button></li>`).join('')}</ul>` : '<p class="muted small">Cuando superes tu mejor marca en un ejercicio aparecerá aquí.</p>'}
+    <h2 class="sec">Tus ejercicios</h2>
+    <ul class="my-ex">${mis.map(({ id, e, last }) => `<li><button data-act="ej-ver" data-id="${esc(id)}">${thumb(getEj(id), 'sm')}<span style="min-width:0"><span class="nm">${esc(getEj(id).nombre)}</span><span class="sub">Mejor: ${esc(e.best.label)} · ${e.hist.length} ${e.hist.length === 1 ? 'sesión' : 'sesiones'}</span></span>${trend(e)}</button></li>`).join('')}</ul>`;
 }
 
 /* ================= Selector de ejercicios ================= */
@@ -470,7 +715,7 @@ function vPicker() {
     sub = `<p class="small muted" style="margin:0 0 6px">Reemplaza <b>${esc(it.ej)} · ${esc(getEj(it.ej).nombre)}</b> solo en la sesión de hoy.</p>`;
     if (it.rid && pl && pl.items.some(x => x.uid === it.rid)) sub += `<label class="switch small"><input type="checkbox" id="pk-pl" ${p.tambienPl ? 'checked' : ''}> Cambiarlo también en la plantilla «${esc(pl.nombre)}»</label>`;
   }
-  return `<div class="back" data-act="picker-close"></div><section class="sheet" role="dialog" aria-modal="true" aria-label="${titulo}">
+  return `<div class="back" data-act="picker-close"></div><section class="sheet picker" role="dialog" aria-modal="true" aria-label="${titulo}">
     <div class="sheet-h"><h2>${titulo}</h2><button class="btn sm" data-act="picker-close">Cerrar</button></div>
     ${sub}<input class="inp" id="pk-q" type="search" placeholder="Buscar por nombre, código o alias" value="${esc(p.q)}" autocomplete="off">
     <div class="chips-x">${grupos.map(g => `<button class="chip ${p.g === g.id ? 'on' : ''}" data-act="pk-g" data-g="${g.id}">${esc(g.nombre)}</button>`).join('')}</div>
@@ -536,7 +781,7 @@ $('#file-import').addEventListener('change', e => {
 });
 
 /* ================= Render ================= */
-const TITULOS = { hoy: 'Hoy', rutinas: 'Rutinas', historial: 'Historial', cuenta: 'Cuenta' };
+const TITULOS = { hoy: 'Hoy', rutinas: 'Rutinas', ejercicios: 'Ejercicios', progreso: 'Progreso', cuenta: 'Cuenta' };
 function render() {
   const dentro = S.authReady && S.user;
   $('#top').hidden = !dentro; $('#tabs').hidden = !dentro; document.body.classList.toggle('out', !dentro);
@@ -544,19 +789,21 @@ function render() {
   if (!S.authReady) { $('#app').innerHTML = '<div class="card empty" style="margin-top:40px"><h3>Cargando…</h3></div>'; return; }
   if (!S.user) { $('#app').innerHTML = vLogin(); renderOverlay(); return; }
   let html;
-  if (S.tab === 'hoy') html = vHoy(); else if (S.tab === 'rutinas') html = vRutinas(); else if (S.tab === 'historial') html = vHistorial(); else html = vCuenta();
+  if (S.tab === 'hoy') html = vHoy(); else if (S.tab === 'rutinas') html = vRutinas(); else if (S.tab === 'ejercicios') html = vEjercicios(); else if (S.tab === 'progreso') html = vProgreso(); else html = vCuenta();
   $('#app').innerHTML = html;
   $('#vtitle').textContent = S.tab === 'hoy' && S.activa ? 'Entrenando' : S.tab === 'rutinas' && S.editPl ? 'Plantilla' : TITULOS[S.tab];
-  for (const t of ['hoy', 'rutinas', 'historial', 'cuenta']) $('#tab-' + t).classList.toggle('on', S.tab === t);
+  for (const t of ['hoy', 'rutinas', 'ejercicios', 'progreso']) $('#tab-' + t).classList.toggle('on', S.tab === t);
+  $('#btn-cuenta').classList.toggle('on', S.tab === 'cuenta');
   $('#tab-hoy-l').textContent = S.activa ? 'Entrenando' : 'Hoy'; $('#tab-dot').hidden = !S.activa;
   renderOverlay();
 }
 function renderOverlay() {
   const o = $('#overlay'); let html = '';
+  if (S.verEj) html += vEjDetalle(S.verEj);
   if (S.picker) html += vPicker();
   if (S.confirm) html += `<div class="back" style="z-index:30" data-act="confirm-no"></div><div class="dialog" role="alertdialog" aria-modal="true"><h3>${esc(S.confirm.titulo)}</h3><p class="muted">${esc(S.confirm.texto)}</p>
     <div class="row"><button class="btn" data-act="confirm-no">Cancelar</button><button class="btn primary" data-act="confirm-ok">${esc(S.confirm.ok)}</button></div></div>`;
-  const hadPicker = !!o.querySelector('.sheet'); o.innerHTML = html;
+  const hadPicker = !!o.querySelector('.sheet.picker'); o.innerHTML = html;
   if (S.picker && !hadPicker) { const q = $('#pk-q'); if (q && window.matchMedia('(pointer:fine)').matches) q.focus(); }
 }
 
@@ -577,6 +824,7 @@ document.addEventListener('submit', async e => {
 document.addEventListener('input', e => {
   const t = e.target;
   if (t.id === 'pk-q') { S.picker.q = t.value; $('#pk-list').innerHTML = pickerLista(); return; }
+  if (t.id === 'ex-q') { S.exQ = t.value; $('#ex-list').innerHTML = exLista(); return; }
   if (t.dataset.s) { const [i, j, k] = t.dataset.s.split('|'); S.activa.items[i].series[j][k] = parseNum(t.value); guardarAct(800); return; }
   if (t.dataset.r) { const [pid, i, j, k] = t.dataset.r.split('|'); S.plantillas[pid].items[i].series[j][k] = parseNum(t.value); guardarPl(pid); return; }
   if (t.dataset.f) {
@@ -605,7 +853,16 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const a = b.dataset.act, i = +b.dataset.i, pid = b.dataset.p;
   switch (a) {
-    case 'tab': S.tab = b.dataset.v; if (S.tab === 'historial') S.verSesion = null; if (S.tab === 'rutinas') S.editPl = null; render(); window.scrollTo(0, 0); break;
+    case 'tab': S.tab = b.dataset.v; if (S.tab === 'progreso') S.verSesion = null; if (S.tab === 'rutinas') S.editPl = null; render(); window.scrollTo(0, 0); break;
+    case 'ej-ver': S.verEj = b.dataset.id; renderOverlay(); break;
+    case 'ej-cerrar': S.verEj = null; renderOverlay(); break;
+    case 'ej-a-sesion': { const id = b.dataset.id; S.activa.items.push({ uid: nid(), rid: null, ej: id, origen: 'agregado', descanso: 60, nota: '', carga: '', objetivo: [], series: prefill(id, defaultSeries(id, 3)) }); guardarAct(0); S.verEj = null; toast('Agregado a la sesión de hoy'); render(); break; }
+    case 'ej-a-pl': { const sel = $('#ej-pl'); const p = sel && S.plantillas[sel.value]; if (!p) { toast('Elige una plantilla'); break; } const id = b.dataset.id; p.items.push({ uid: nid(), ej: id, series: defaultSeries(id, 3), descanso: 60, nota: '', carga: '' }); guardarPl(p.id, 0); toast('Agregado a «' + p.nombre + '»'); S.verEj = null; render(); break; }
+    case 'ex-zona': S.exZona = b.dataset.v; render(); break;
+    case 'ex-equipo': S.exEquipo = b.dataset.v; render(); break;
+    case 'ex-mios': S.exMios = !S.exMios; render(); break;
+    case 'ex-limpiar': S.exQ = ''; S.exZona = ''; S.exEquipo = ''; S.exMios = false; render(); break;
+    case 'prog-view': S.progView = b.dataset.v; S.verSesion = null; render(); break;
     case 'reset-pass': {
       const email = ($('#lg-email') || {}).value || '';
       if (!email.trim()) { S.loginErr = 'Escribe tu correo arriba y vuelve a tocar "Olvidé mi contraseña".'; S.loginOk = ''; render(); break; }
@@ -653,7 +910,7 @@ document.addEventListener('click', e => {
     case 'r-down': mover(S.plantillas[pid].items, i, 1); guardarPl(pid, 0); render(); break;
     case 'r-set-add': { const it = S.plantillas[pid].items[i]; it.series.push(clone(it.series[it.series.length - 1] || serieVacia(it.ej))); guardarPl(pid, 0); render(); break; }
     case 'r-set-del': { const it = S.plantillas[pid].items[i]; if (it.series.length > 1) { it.series.pop(); guardarPl(pid, 0); render(); } break; }
-    case 'ses-open': S.verSesion = b.dataset.id; S.tab = 'historial'; render(); window.scrollTo(0, 0); break;
+    case 'ses-open': S.verSesion = b.dataset.id; S.tab = 'progreso'; S.progView = 'sesiones'; render(); window.scrollTo(0, 0); break;
     case 'ses-back': S.verSesion = null; render(); break;
     case 'ses-del': { const id = b.dataset.id; ask('¿Eliminar esta sesión?', 'Se borra del historial para siempre.', 'Eliminar', () => { escribir(R.ses(id), null); S.verSesion = null; toast('Sesión eliminada'); render(); }); break; }
     case 'picker-close': S.picker = null; renderOverlay(); break;
@@ -671,6 +928,6 @@ document.addEventListener('click', e => {
     case 'confirm-no': S.confirm = null; renderOverlay(); break;
   }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (S.confirm) { S.confirm = null; renderOverlay(); } else if (S.picker) { S.picker = null; renderOverlay(); } } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (S.confirm) { S.confirm = null; renderOverlay(); } else if (S.picker) { S.picker = null; renderOverlay(); } else if (S.verEj) { S.verEj = null; renderOverlay(); } } });
 
 render();

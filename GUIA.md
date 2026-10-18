@@ -1,4 +1,4 @@
-# Bitácora de Hierro · Guía de publicación (v1.1)
+# Bitácora de Hierro · Guía de publicación
 
 - Repositorio: https://github.com/jfgitdc/bitacora-hierro
 - Dirección de la app (cuando esté publicada): **https://jfgitdc.github.io/bitacora-hierro/**
@@ -87,3 +87,18 @@ Cuando haya una versión nueva, te entregaré los archivos que cambiaron:
 | "El correo o la contraseña no coinciden" | Revisa el usuario en Firebase → Authentication → Usuarios, o usa "Olvidé mi contraseña" |
 | El inicio de sesión no responde o da error de dominio | Falta el Paso 2 (dominio autorizado) |
 | Entras pero no se guardan los datos | Falta el Paso 1 (reglas) o la base de datos Firestore no está creada |
+
+---
+
+## Flujo de cambios con *pull requests* (desde la v1.2)
+
+1. Cada mejora se desarrolla en una **rama** aparte (por ejemplo `v2-progreso-ejercicios`), nunca directo en `main`.
+2. Al terminar se abre un **pull request** (PR) hacia `main`. En la pestaña **Pull requests** del repositorio ves:
+   - **Conversation**: qué cambia y por qué.
+   - **Commits**: cada paso del trabajo.
+   - **Files changed**: el detalle línea por línea (verde = agregado, rojo = quitado).
+3. Si todo está bien, tocas **Merge pull request → Confirm merge**. GitHub Pages publica `main` en 1 o 2 minutos.
+4. Después puedes borrar la rama con **Delete branch**.
+5. En el celular, abre la app con internet; abajo verás el número de la versión nueva.
+
+Las novedades de cada versión quedan en `CHANGELOG.md`.

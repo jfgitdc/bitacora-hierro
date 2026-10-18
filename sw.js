@@ -1,6 +1,6 @@
 // Service worker: permite abrir la app sin conexión.
 // Cambia CACHE en cada versión nueva para que el celular descargue los archivos actualizados.
-const CACHE = 'bitacora-v1.1.0';
+const CACHE = 'bitacora-v1.2.0';
 const FB = 'https://www.gstatic.com/firebasejs/12.19.0/';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './firebase-config.js',
@@ -15,7 +15,7 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
-    .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+    .then(keys => Promise.all(keys.filter(k => k !== CACHE && !k.endsWith('-img')).map(k => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
 
@@ -25,6 +25,18 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+
+  // Imágenes de ejercicios: se guardan la primera vez que se ven y luego salen de la copia local.
+  if (url.origin === self.location.origin && url.pathname.includes('/img/')) {
+    e.respondWith(caches.open(CACHE + '-img').then(async cache => {
+      const hit = await cache.match(req);
+      if (hit) return hit;
+      const res = await fetch(req);
+      if (res && res.ok) cache.put(req, res.clone());
+      return res;
+    }));
+    return;
+  }
 
   // Archivos de la propia app: primero la red (para recibir actualizaciones), si tarda o falla, la copia guardada.
   if (url.origin === self.location.origin) {
